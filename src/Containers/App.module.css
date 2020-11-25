@@ -1,0 +1,7 @@
+.App {
+  margin: 16px;
+}
+
+:global(.dark).App {
+  background-color: #ddd;
+}

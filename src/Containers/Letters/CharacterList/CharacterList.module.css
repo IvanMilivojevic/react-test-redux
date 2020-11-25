@@ -1,0 +1,4 @@
+.LettersWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}

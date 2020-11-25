@@ -1,0 +1,28 @@
+.Nav {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.Nav > li > a {
+  display: inline-flex;
+  border: 1px solid #000;
+  background-color: #ddd;
+  color: #000;
+  border-radius: 3px;
+  text-decoration: none;
+  line-height: 30px;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.Nav > li > .ActiveLink {
+  background-color: #000;
+  color: #fff;
+}
+
+.Nav > li > a:global(.active) {
+  background-color: #000;
+  color: #fff;
+}

@@ -1,0 +1,11 @@
+:global(.dark) .Test .Active {
+  background-color: red;
+}
+
+.Test .Active:hover {
+  background-color: yellow;
+}
+
+.Test .Active {
+  background-color: blue;
+}

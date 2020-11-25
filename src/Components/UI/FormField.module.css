@@ -1,0 +1,30 @@
+.FormFieldControl {
+  margin-bottom: 10px;
+}
+
+.FormFieldControl > label > span {
+  margin-bottom: 5px;
+  display: inline-flex;
+  text-transform: capitalize;
+}
+
+.Input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #000;
+  display: flex;
+  outline: none;
+}
+
+textarea.Input {
+  padding: 20px;
+}
+
+.InvalidInput {
+  border: 1px solid red;
+  background-color: rgb(175, 118, 118);
+}
