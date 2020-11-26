@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import withTheme from "../../../../Components/Hoc/withTheme";
+import { connect } from "react-redux";
 
 class Char extends Component {
   inputRef = React.createRef();
@@ -20,7 +20,7 @@ class Char extends Component {
       color: "white",
     };
 
-    style.backgroundColor = this.props.themeContext.theme === "light" ? "red" : "black";
+    style.backgroundColor = this.props.theme === "light" ? "red" : "black";
 
     return (
       <span
@@ -40,7 +40,13 @@ class Char extends Component {
 Char.propTypes = {
   click: PropTypes.func.isRequired,
   letter: PropTypes.string,
-  themeContext: PropTypes.object,
+  theme: PropTypes.string,
 };
 
-export default withTheme(Char);
+const mapStateToProps = (state) => {
+  return {
+    theme: state.theme,
+  };
+};
+
+export default connect(mapStateToProps)(Char);
