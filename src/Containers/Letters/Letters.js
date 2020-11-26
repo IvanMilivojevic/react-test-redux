@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Cockpit from "./Cockpit/Cockpit";
 import CharacterList from "./CharacterList/CharacterList";
 
@@ -11,8 +13,14 @@ class Letters extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      letters: [...this.props.lettersStore],
+    });
+  }
+
   componentWillUnmount() {
-    console.log("letters unmount");
+    this.props.lettersAdd(this.state.letters);
   }
 
   lettersHandler = (event) => {
@@ -40,4 +48,21 @@ class Letters extends Component {
   }
 }
 
-export default Letters;
+Letters.propTypes = {
+  lettersAdd: PropTypes.func,
+  lettersStore: PropTypes.array,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    lettersStore: state.letters,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    lettersAdd: (letters) => dispatch({ type: "LETTERS_ADD", letters }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Letters);

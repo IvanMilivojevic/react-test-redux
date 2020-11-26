@@ -1,5 +1,6 @@
 const initialState = {
   theme: "light",
+  letters: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,6 +10,12 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       theme,
+    };
+  }
+  if (action.type === "LETTERS_ADD") {
+    return {
+      ...state,
+      letters: [...action.letters],
     };
   }
   return state;
