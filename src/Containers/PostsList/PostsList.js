@@ -1,35 +1,16 @@
 import React, { Component, Suspense } from "react";
 import { Route } from "react-router-dom";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Axios from "../../Axios/AxiosPosts";
 import Post from "./Post/Post";
+import postsFetch from "../../store/actions";
 
 const FeaturedPost = React.lazy(() => import("../FeaturedPost/FeaturedPost"));
 
 class PostsLists extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      posts: [],
-    };
-  }
-
   componentDidMount() {
     console.log(this.props);
-
-    Axios.get("/posts")
-      .then((response) => {
-        console.log(response);
-        const posts = response.data.slice(0, 4);
-        for (let i = 0; i < posts.length; i += 1) {
-          posts[i].author = "Ivan";
-        }
-        this.setState({ posts });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    this.props.postsFetchStart();
   }
 
   setFeatured = (id) => {
@@ -37,9 +18,10 @@ class PostsLists extends Component {
   };
 
   render() {
+    console.log("renderposts");
     return (
       <div>
-        {this.state.posts.map((post) => {
+        {this.props.posts.map((post) => {
           return <Post title={post.title} author={post.author} key={post.id} click={() => this.setFeatured(post.id)} />;
         })}
         <Route
@@ -57,7 +39,21 @@ class PostsLists extends Component {
 }
 
 PostsLists.propTypes = {
+  posts: PropTypes.array,
   history: PropTypes.object,
+  postsFetchStart: PropTypes.func,
 };
 
-export default PostsLists;
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postsFetchStart: () => dispatch(postsFetch()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsLists);

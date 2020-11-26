@@ -1,6 +1,7 @@
 const initialState = {
   theme: "light",
   letters: [],
+  posts: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,12 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       letters: [...action.letters],
+    };
+  }
+  if (action.type === "POSTS_FETCHED") {
+    return {
+      ...state,
+      posts: action.posts,
     };
   }
   return state;
