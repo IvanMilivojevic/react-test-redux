@@ -55,7 +55,7 @@ Letters.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    lettersStore: state.letters,
+    lettersStore: state.ltr.letters,
   };
 };
 
