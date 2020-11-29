@@ -5,6 +5,7 @@ import Header from "../Components/Header/Header";
 import Letters from "./Letters/Letters";
 import PostsList from "./PostsList/PostsList";
 import NewPost from "./NewPost/NewPost";
+import Auth from "./AuthForm/Auth";
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/" exact component={Letters} />
             <Route path="/posts" component={PostsList} />
             <Route path="/new-post" component={NewPost} />
+            <Route path="/auth" component={Auth} />
           </Switch>
         </div>
       </BrowserRouter>

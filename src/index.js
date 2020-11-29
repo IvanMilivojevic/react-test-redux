@@ -3,21 +3,19 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import Axios from "axios";
 import "./index.css";
 import App from "./Containers/App";
 import * as serviceWorker from "./serviceWorker";
 import themeReducer from "./store/reducers/themeReducer";
 import lettersReducer from "./store/reducers/lettersReducer";
 import postsReducer from "./store/reducers/postsReducer";
-
-Axios.defaults.headers.common["Authorization"] = "DEFAULT TOKEN";
-Axios.defaults.baseURL = "https://jsonplaceholder.typicode.com/";
+import authReducer from "./store/reducers/authReducer";
 
 const rootReducer = combineReducers({
   thm: themeReducer,
   ltr: lettersReducer,
   pst: postsReducer,
+  ath: authReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

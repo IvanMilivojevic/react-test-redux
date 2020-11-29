@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import Axios from "../../Axios/AxiosUserPosts";
 import styles from "./NewPost.module.css";
 import FormField from "../../Components/UI/FormField";
 
@@ -9,7 +9,7 @@ class NewPost extends Component {
 
     this.state = {
       form: [
-        { name: "author", placeholder: "Author", type: "input", value: "", required: true, valid: false },
+        // { name: "author", placeholder: "Author", type: "input", value: "", required: true, valid: false },
         { name: "title", placeholder: "Post Title", type: "input", value: "", required: true, valid: false },
         { name: "content", placeholder: "Post Content", type: "textarea", value: "", required: true, valid: false },
         {
@@ -63,7 +63,7 @@ class NewPost extends Component {
         formData[field.name] = field.value;
       });
 
-      Axios.post("/posts", formData)
+      Axios.post("/posts.json", formData)
         .then((res) => {
           console.log(res);
         })

@@ -27,7 +27,7 @@ class FeaturedPost extends Component {
       (this.props.match.params.id && !this.state.featuredPost) ||
       (this.state.featuredPost && +this.props.match.params.id !== this.state.featuredPost.id)
     ) {
-      Axios.get(`/posts/${this.props.match.params.id}`)
+      Axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`)
         .then((response) => {
           console.log(response);
 

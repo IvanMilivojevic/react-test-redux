@@ -18,6 +18,9 @@ const Navigation = () => {
       <li>
         <NavLink to="/new-post">New Post</NavLink>
       </li>
+      <li>
+        <NavLink to="/auth">Authorization</NavLink>
+      </li>
     </ul>
   );
 };

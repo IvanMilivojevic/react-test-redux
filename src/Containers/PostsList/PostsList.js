@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Post from "./Post/Post";
-import postsFetch from "../../store/actions";
+import { postsFetch } from "../../store/actions";
 
 const FeaturedPost = React.lazy(() => import("../FeaturedPost/FeaturedPost"));
 
