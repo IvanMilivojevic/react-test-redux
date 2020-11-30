@@ -7,14 +7,14 @@ const Post = (props) => {
   return (
     <div className={styles.Post} onClick={props.click} onKeyDown={props.click} role="button" tabIndex="0">
       <div>{props.title}</div>
-      <div>{props.author}</div>
+      <div>{props.content}</div>
     </div>
   );
 };
 
 Post.propTypes = {
   title: PropTypes.string,
-  author: PropTypes.string,
+  content: PropTypes.string,
   click: PropTypes.func,
 };
 

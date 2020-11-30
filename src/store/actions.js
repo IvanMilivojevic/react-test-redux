@@ -1,15 +1,20 @@
 import AxiosDefault from "axios";
-import AxiosPosts from "../Axios/AxiosPosts";
+import AxiosPosts from "../Axios/AxiosUserPosts";
 
-export const postsFetch = () => {
+export const postsFetch = (token) => {
   return (dispatch) => {
-    AxiosPosts.get("/posts")
+    AxiosPosts.get(`/posts.json?auth=${token}`)
       .then((response) => {
         console.log(response);
-        const posts = response.data.slice(0, 4);
-        for (let i = 0; i < posts.length; i += 1) {
-          posts[i].author = "Ivan";
+        const posts = [];
+        const postsIds = Object.keys(response.data);
+
+        for (let i = 0; i < postsIds.length; i += 1) {
+          const post = response.data[postsIds[i]];
+          post.id = postsIds[i];
+          posts.push(post);
         }
+
         dispatch({ type: "POSTS_FETCHED", posts });
       })
       .catch((error) => {

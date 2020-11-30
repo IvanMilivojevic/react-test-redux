@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Axios from "../../Axios/AxiosUserPosts";
 import styles from "./NewPost.module.css";
 import FormField from "../../Components/UI/FormField";
@@ -55,24 +57,30 @@ class NewPost extends Component {
 
   formSubmit = (event) => {
     event.preventDefault();
-    const shouldSubmit = this.state.form.every((field) => field.valid);
 
-    if (shouldSubmit) {
-      const formData = {};
-      this.state.form.forEach((field) => {
-        formData[field.name] = field.value;
-      });
+    if (this.props.isAuthorized) {
+      const shouldSubmit = this.state.form.every((field) => field.valid);
 
-      Axios.post("/posts.json", formData)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
+      if (shouldSubmit) {
+        const formData = {};
+        this.state.form.forEach((field) => {
+          formData[field.name] = field.value;
         });
-    }
 
-    this.setState({ formSubmitted: true });
+        Axios.post(`/posts.json?auth=${this.props.token}`, formData)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      this.setState({ formSubmitted: true });
+    } else {
+      this.props.onAuthRedirect("/new-post");
+      this.props.history.push("/auth");
+    }
   };
 
   render() {
@@ -89,7 +97,7 @@ class NewPost extends Component {
             />
           ))}
           <button type="submit" className={styles.SubmitButton} onClick={this.formSubmit}>
-            Submit
+            {this.props.isAuthorized ? "Submit" : "Log In to Submit Post"}
           </button>
         </form>
       </div>
@@ -97,4 +105,24 @@ class NewPost extends Component {
   }
 }
 
-export default NewPost;
+NewPost.propTypes = {
+  token: PropTypes.string,
+  isAuthorized: PropTypes.bool,
+  onAuthRedirect: PropTypes.func,
+  history: PropTypes.object,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.ath.token,
+    isAuthorized: !!state.ath.token,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuthRedirect: (path) => dispatch({ type: "AUTH_REDIRECT", path }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

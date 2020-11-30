@@ -10,7 +10,7 @@ const FeaturedPost = React.lazy(() => import("../FeaturedPost/FeaturedPost"));
 class PostsLists extends Component {
   componentDidMount() {
     console.log(this.props);
-    this.props.postsFetchStart();
+    this.props.postsFetchStart(this.props.token);
   }
 
   setFeatured = (id) => {
@@ -22,7 +22,9 @@ class PostsLists extends Component {
     return (
       <div>
         {this.props.posts.map((post) => {
-          return <Post title={post.title} author={post.author} key={post.id} click={() => this.setFeatured(post.id)} />;
+          return (
+            <Post title={post.title} content={post.content} key={post.id} click={() => this.setFeatured(post.id)} />
+          );
         })}
         <Route
           path="/posts/:id"
@@ -40,6 +42,7 @@ class PostsLists extends Component {
 
 PostsLists.propTypes = {
   posts: PropTypes.array,
+  token: PropTypes.string,
   history: PropTypes.object,
   postsFetchStart: PropTypes.func,
 };
@@ -47,12 +50,13 @@ PostsLists.propTypes = {
 const mapStateToProps = (state) => {
   return {
     posts: state.pst.posts,
+    token: state.ath.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postsFetchStart: () => dispatch(postsFetch()),
+    postsFetchStart: (token) => dispatch(postsFetch(token)),
   };
 };
 

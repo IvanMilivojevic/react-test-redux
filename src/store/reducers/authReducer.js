@@ -3,6 +3,7 @@ const initialState = {
   userId: null,
   loading: false,
   error: null,
+  redirect: "/",
 };
 
 const authReducer = (state = initialState, action) => {
@@ -25,6 +26,19 @@ const authReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       error: action.error,
+    };
+  }
+  if (action.type === "AUTH_LOGOUT") {
+    return {
+      ...state,
+      token: null,
+      userId: null,
+    };
+  }
+  if (action.type === "AUTH_REDIRECT") {
+    return {
+      ...state,
+      redirect: action.path,
     };
   }
   return state;

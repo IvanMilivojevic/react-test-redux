@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./Auth.module.css";
 import FormField from "../../Components/UI/FormField";
@@ -87,30 +88,38 @@ class Auth extends Component {
   };
 
   render() {
+    let redirectAuth = null;
+
+    if (this.props.isAuthorized) {
+      redirectAuth = <Redirect to={this.props.authRedirect} />;
+    }
     return (
-      <div className={styles.FormWrapper}>
-        <button type="button" onClick={this.toggleForm}>
-          Switch to {this.state.isSignUp ? "Sign In" : "Sign Up"} Form
-        </button>
-        <h2>{this.state.isSignUp ? "Sign Up Form:" : "Sign In Form"}</h2>
-        {this.props.loading ? (
-          <Spinner />
-        ) : (
-          <form>
-            {this.state.form.map((field) => (
-              <FormField
-                {...field}
-                changed={this.changeValueHandler}
-                key={field.name}
-                checker={this.state.formSubmitted}
-              />
-            ))}
-            <button type="submit" className={styles.SubmitButton} onClick={this.formSubmit}>
-              Submit
-            </button>
-          </form>
-        )}
-      </div>
+      <>
+        {redirectAuth}
+        <div className={styles.FormWrapper}>
+          <button type="button" onClick={this.toggleForm}>
+            Switch to {this.state.isSignUp ? "Sign In" : "Sign Up"} Form
+          </button>
+          <h2>{this.state.isSignUp ? "Sign Up Form:" : "Sign In Form"}</h2>
+          {this.props.loading ? (
+            <Spinner />
+          ) : (
+            <form>
+              {this.state.form.map((field) => (
+                <FormField
+                  {...field}
+                  changed={this.changeValueHandler}
+                  key={field.name}
+                  checker={this.state.formSubmitted}
+                />
+              ))}
+              <button type="submit" className={styles.SubmitButton} onClick={this.formSubmit}>
+                Submit
+              </button>
+            </form>
+          )}
+        </div>
+      </>
     );
   }
 }
@@ -118,11 +127,15 @@ class Auth extends Component {
 Auth.propTypes = {
   onAuth: PropTypes.func,
   loading: PropTypes.bool,
+  authRedirect: PropTypes.string,
+  isAuthorized: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
   return {
     loading: state.ath.loading,
+    isAuthorized: !!state.ath.token,
+    authRedirect: state.ath.redirect,
   };
 };
 
