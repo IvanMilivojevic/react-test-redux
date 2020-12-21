@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Axios from "../../Axios/AxiosUserPosts";
@@ -22,6 +22,21 @@ const NewPost = (props) => {
     },
   ]);
   const [formSubmiting, setFormSubmiting] = useState(false);
+  const [elements] = useState([1, 2, 3]);
+  const refHolder = useRef([]);
+  const ch = (e) => {
+    if (!e.target.closest(".dd")) {
+      refHolder.current.forEach((ele) => {
+        ele.classList.remove("show");
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(refHolder.current)
+    const wrapper = document.querySelector(".dinamic");
+    wrapper.addEventListener("click", ch);
+  }, []);
 
   const inputValidation = (value) => {
     const inputValue = value.trim();
@@ -74,6 +89,19 @@ const NewPost = (props) => {
     }
   };
 
+  const checkRef = (e) => {
+    const clicked = e.target;
+    refHolder.current.forEach((ele) => {
+      if (ele === clicked) {
+        console.log(ele);
+        ele.classList.toggle("show");
+      } else {
+        console.log(ele);
+        ele.classList.remove("show");
+      }
+    });
+  };
+
   return (
     <div className={styles.FormWrapper}>
       <h2>New Post Form:</h2>
@@ -85,6 +113,24 @@ const NewPost = (props) => {
           {props.isAuthorized ? "Submit" : "Log In to Submit Post"}
         </button>
       </form>
+      <div className="dinamic">
+        {elements.map((num, i) => {
+          return (
+            // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+            <div
+              ref={(ref) => refHolder.current.push(ref)}
+              key={Math.random()}
+              onClick={checkRef}
+              role="button"
+              onKeyDown={() => checkRef(i)}
+              style={{ display: "inline-block", padding: "10px" }}
+              className="dd"
+            >
+              {num}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
