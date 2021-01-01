@@ -33,7 +33,7 @@ const NewPost = (props) => {
   };
 
   useEffect(() => {
-    console.log(refHolder.current)
+    console.log(refHolder.current);
     const wrapper = document.querySelector(".dinamic");
     wrapper.addEventListener("click", ch);
   }, []);
