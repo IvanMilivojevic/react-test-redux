@@ -41,7 +41,6 @@ class Letters extends Component {
   render() {
     return (
       <div>
-        <h1>Home</h1>
         <h2>Hello from Home page</h2>
         <h2>Hello from Home page</h2>
         <Cockpit change={this.lettersHandler} letters={this.state.letters} />
