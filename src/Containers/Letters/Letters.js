@@ -41,6 +41,7 @@ class Letters extends Component {
   render() {
     return (
       <div>
+        <h1>Home</h1>
         <Cockpit change={this.lettersHandler} letters={this.state.letters} />
         {this.state.letters.length ? <CharacterList letters={this.state.letters} clicked={this.removeLetter} /> : null}
       </div>
