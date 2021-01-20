@@ -104,7 +104,7 @@ const NewPost = (props) => {
 
   return (
     <div className={styles.FormWrapper}>
-      <h2>New Post Form:</h2>
+      <h2>New Post Form - Requires sign in:</h2>
       <form>
         {formAll.map((field) => (
           <FormField {...field} changed={changeValueHandler} key={field.name} checker={formSubmiting} />
