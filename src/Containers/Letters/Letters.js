@@ -42,10 +42,6 @@ class Letters extends Component {
     return (
       <div>
         <h2>Hello from Home page</h2>
-        <h2>Hello from Home page</h2>
-        <h4>Hello from Home page new</h4>
-        <h4>Hello from Home page new</h4>
-        <h2>Hello from Home page new 2222</h2>
         <Cockpit change={this.lettersHandler} letters={this.state.letters} />
         {this.state.letters.length ? <CharacterList letters={this.state.letters} clicked={this.removeLetter} /> : null}
       </div>
